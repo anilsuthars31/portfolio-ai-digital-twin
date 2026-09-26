@@ -77,7 +77,8 @@ I engineered new features like total base stats and attack-defense ratios with F
 
 - Category: Full-Stack
 - Tech: Node.js, Express.js, MongoDB, REST APIs
-- Highlights: Full backend · role-based access · MongoDB schema design
+- Highlights: Team project · full backend · role-based access · MongoDB schema design
+- GitHub: https://github.com/ibrahimarshath/MinorMap-
 
 A quiz-based system that helps students pick academic minors. I built the full backend: RESTful APIs for user authentication, quiz management, and result processing; role-based access (admin vs student) with middleware; and MongoDB schemas designed around the app's data flow. I also wired the frontend to the backend so the quiz-to-result experience felt smooth end to end.
 
@@ -88,6 +89,25 @@ A quiz-based system that helps students pick academic minors. I built the full b
 - Highlights: Team project · responsive UI · role-based access
 
 A web platform where faculty can add, edit, and display their research publications and profiles. I made the UI responsive across devices and set up role-based access for different user types. It was a team project: I took part in requirement discussions, planned the UI with the team, and we split the feature work.
+
+### Visit Rajasthan — 3D Travel Guide
+
+- Category: Web
+- Tech: TypeScript, Vite, Three.js, Blender, GitHub Actions
+- Highlights: Team project · WebGL landing scene · live on GitHub Pages
+- GitHub: https://github.com/Janci-Kundana/visit-rajasthan
+- Live: https://janci-kundana.github.io/visit-rajasthan/
+
+A team-built visual travel guide to four Rajasthan destinations (Jaisalmer, Jaipur, Udaipur and Jawai Bandh), with a 3D Hawa Mahal landing scene, isometric city tiles rendered in Blender, and a guide page with an embedded map for each place. My contribution was formalising the project's SPEC.md and CLAUDE.md into the product contract that every change to the site has to follow.
+
+### Atria in Borderland — Zombie Card Game
+
+- Category: Game
+- Tech: Python, OOP, UML
+- Highlights: Team project · 5-player rounds · object-oriented design with UML
+- GitHub: https://github.com/ibrahimarshath/Atria-in-boderland-CLI-based-game-
+
+A command-line card game inspired by Alice in Borderland, built as a team with classmates. Five players compete over five rounds with number cards and special Zombie, Shotgun and Vaccine cards: zombies infect the humans they beat, and the side with the most players after five rounds wins. The code is object-oriented (abstract card classes, players, match resolver) and designed from a UML diagram, and I worked on the final presentation.
 
 ### Beat Tap — Rhythm Game
 
