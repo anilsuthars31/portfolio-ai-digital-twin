@@ -1,6 +1,6 @@
 import Contact from "@/components/Contact";
 import Hero from "@/components/Hero";
-import ProjectCard from "@/components/ProjectCard";
+import Projects from "@/components/Projects";
 import Section from "@/components/Section";
 import Skills from "@/components/Skills";
 import Timeline from "@/components/Timeline";
@@ -23,11 +23,7 @@ export default function Home() {
         resume={profile.contact.Resume}
       />
       <Section id="projects" title="Projects">
-        <div className="grid gap-5 sm:grid-cols-2">
-          {profile.projects.map((p) => (
-            <ProjectCard key={p.title} project={p} />
-          ))}
-        </div>
+        <Projects projects={profile.projects} githubUrl={profile.contact.GitHub} />
       </Section>
       <Section id="skills" title="Skills">
         <Skills skills={profile.skills} />

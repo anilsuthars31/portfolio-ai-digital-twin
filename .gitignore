@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.example
+
+# personal resume (contains private contact details) - never commit
+/public/resume.pdf

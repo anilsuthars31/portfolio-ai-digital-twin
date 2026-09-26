@@ -20,21 +20,23 @@ The parser depends on these rules — breaking them silently drops content from 
 
 ### Fields per section
 
-| Section    | Entry heading                    | Fields                                                                                         |
-| ---------- | -------------------------------- | ---------------------------------------------------------------------------------------------- |
-| About      | (none)                           | `Tagline`; paragraph = bio                                                                     |
-| Contact    | (none)                           | `Email`, `GitHub`, `LinkedIn`, `Resume` (path under `public/`), `Photo` (path under `public/`) |
-| Skills     | group name, e.g. `### Languages` | `Items` — comma-separated                                                                      |
-| Projects   | project title                    | `Tech` (comma-separated), `GitHub`, `Live`; paragraph = description                            |
-| Education  | `Degree — Institution`           | `Period`, `Location`; paragraph = details                                                      |
-| Experience | `Role — Organization`            | `Period`, `Location`; paragraph = details                                                      |
+| Section    | Entry heading                    | Fields                                                                                                                                                                |
+| ---------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| About      | (none)                           | `Tagline`; paragraph = bio                                                                                                                                            |
+| Contact    | (none)                           | `Email`, `GitHub`, `LinkedIn`, `Resume` (path under `public/`), `Photo` (path under `public/`)                                                                        |
+| Skills     | group name, e.g. `### Languages` | `Items` — comma-separated                                                                                                                                             |
+| Projects   | project title                    | `Category` (filter tab, e.g. Machine Learning, Full-Stack, Web), `Tech` (comma-separated), `Highlights` (separated by `·`), `GitHub`, `Live`; paragraph = description |
+| Education  | `Degree — Institution`           | `Period`, `Location`; paragraph = details                                                                                                                             |
+| Experience | `Role — Organization`            | `Period`, `Location`; paragraph = details                                                                                                                             |
 
 ### Project template
 
 ```markdown
 ### Project Title
 
+- Category: Web
 - Tech: Next.js, TypeScript
+- Highlights: Key result · another result
 - GitHub: https://github.com/anilsuthars31/repo
 - Live: https://example.vercel.app
 
