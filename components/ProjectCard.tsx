@@ -17,7 +17,7 @@ export default function ProjectCard({ project, onOpen }: Props) {
   const highlights = splitList(fields.Highlights, "·");
 
   return (
-    <article className="group flex flex-col rounded-xl border border-zinc-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-indigo-800 dark:hover:shadow-zinc-900">
+    <article className="group flex h-full flex-col rounded-xl border border-zinc-200 bg-white/80 p-5 backdrop-blur transition hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-indigo-700 dark:hover:shadow-indigo-500/10">
       <div className="flex items-start justify-between gap-3">
         {fields.Category && (
           <span className="text-xs font-semibold tracking-wide text-indigo-600 uppercase dark:text-indigo-400">

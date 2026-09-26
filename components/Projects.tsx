@@ -5,6 +5,7 @@ import type { Entry } from "@/lib/profile";
 import GitHubIcon from "./GitHubIcon";
 import ProjectCard from "./ProjectCard";
 import ProjectDetails from "./ProjectDetails";
+import TiltCard from "./TiltCard";
 
 const ALL = "All";
 
@@ -39,7 +40,9 @@ export default function Projects({ projects, githubUrl }: { projects: Entry[]; g
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((p) => (
-          <ProjectCard key={p.title} project={p} onOpen={() => setSelected(p)} />
+          <TiltCard key={p.title}>
+            <ProjectCard project={p} onOpen={() => setSelected(p)} />
+          </TiltCard>
         ))}
       </div>
 

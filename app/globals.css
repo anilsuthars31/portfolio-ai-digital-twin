@@ -12,3 +12,29 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
+
+/* Slow drifting background glows (components/Aurora.tsx) */
+@theme {
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+
+  @keyframes drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(6vw, 4vh, 0) scale(1.12);
+    }
+    100% {
+      transform: translate3d(-4vw, 8vh, 0) scale(0.95);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-drift {
+    animation: none;
+  }
+}

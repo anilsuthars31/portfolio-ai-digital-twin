@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Aurora from "@/components/Aurora";
 import ChatWidget from "@/components/ChatWidget";
 import Navbar from "@/components/Navbar";
 import { getProfile } from "@/lib/profile";
@@ -34,7 +35,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans">
+      <body className="relative isolate min-h-full flex flex-col bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans">
+        <Aurora />
         <Navbar name={name} />
         {children}
         <ChatWidget name={name} />

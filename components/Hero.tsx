@@ -1,3 +1,5 @@
+import HeroVisual from "./HeroVisual";
+
 type Props = {
   name: string;
   tagline: string;
@@ -20,13 +22,15 @@ export default function Hero({ name, tagline, bio, photo, resume }: Props) {
     >
       <div className="flex-1">
         <p className="mb-3 text-sm font-medium text-indigo-600 dark:text-indigo-400">Hi, I&apos;m</p>
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{name}</h1>
+        <h1 className="bg-gradient-to-r from-indigo-600 via-violet-600 to-pink-500 bg-clip-text pb-1 text-4xl font-bold tracking-tight text-transparent sm:text-6xl dark:from-indigo-400 dark:via-violet-400 dark:to-pink-400">
+          {name}
+        </h1>
         <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-300">{tagline}</p>
         <p className="mt-6 max-w-2xl leading-relaxed text-zinc-700 dark:text-zinc-300">{bio}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <a
             href="#projects"
-            className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-500"
+            className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-indigo-500/30 transition hover:-translate-y-0.5 hover:bg-indigo-500 hover:shadow-indigo-500/50"
           >
             See my projects
           </a>
@@ -49,12 +53,7 @@ export default function Hero({ name, tagline, bio, photo, resume }: Props) {
           className="h-36 w-36 rounded-full object-cover ring-4 ring-indigo-100 sm:h-44 sm:w-44 dark:ring-indigo-900/50"
         />
       ) : (
-        <div
-          aria-hidden
-          className="flex h-36 w-36 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 text-4xl font-bold text-white ring-4 ring-indigo-100 sm:h-44 sm:w-44 dark:ring-indigo-900/50"
-        >
-          {initials}
-        </div>
+        <HeroVisual initials={initials} />
       )}
     </section>
   );

@@ -70,6 +70,7 @@ Plugin components that support developing and maintaining this project, stored i
 | Chat API route with Claude + streaming | Done |
 | Free Gemini fallback (no paid key needed) | Done |
 | Project details modal + category filters | Done |
+| Interactive 3D UI (hero scene, tilt cards, animated background) | Done |
 | Chat widget UI | Done |
 | Guardrails (grounding, off-topic, limits) | Done |
 | Skills: `update-profile`, `twin-persona` | Done |
