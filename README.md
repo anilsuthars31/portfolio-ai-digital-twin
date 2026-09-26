@@ -2,17 +2,17 @@
 
 Personal portfolio for Anil Suthar S with an **AI digital twin**: a chat widget that answers visitors' questions about my skills, projects, and education in my voice, grounded only in [`data/profile.md`](data/profile.md).
 
-Built with Next.js (App Router) + TypeScript, Tailwind CSS, and an LLM: Google Gemini's **free tier** by default, or the Claude API (`claude-sonnet-5`) if you add an Anthropic key. See [`SPEC.md`](SPEC.md) for features and status.
+Built with Next.js (App Router) + TypeScript, Tailwind CSS, and the Claude API (`claude-sonnet-5`). See [`SPEC.md`](SPEC.md) for features and status.
 
 ## Run locally
 
 ```bash
 npm install
-cp .env.example .env.local   # then add a free GEMINI_API_KEY (or ANTHROPIC_API_KEY)
+cp .env.example .env.local   # then add your ANTHROPIC_API_KEY
 npm run dev                  # http://localhost:3000
 ```
 
-Get a free Gemini key at https://aistudio.google.com/apikey (no credit card). Without any key the site works normally; the chat replies that the twin is unavailable.
+Without a key the site works normally; the chat replies that the twin is unavailable.
 
 ## Editing content
 
@@ -20,7 +20,7 @@ Everything personal lives in `data/profile.md` — the site and the twin both re
 
 ## How the twin works
 
-`components/ChatWidget.tsx` → `POST /api/chat` → `lib/prompt.ts` builds the system prompt from the profile → `lib/llm.ts` streams the reply from Claude or Gemini back as plain text.
+`components/ChatWidget.tsx` → `POST /api/chat` → `lib/prompt.ts` builds the system prompt from the profile → Claude streams the reply back as plain text.
 
 Guardrails: answers only from the profile (says "I don't know" otherwise), declines off-topic requests, 1000-char message limit, last 12 messages of history, 1024 max output tokens, API key server-side only.
 
@@ -37,6 +37,6 @@ Guardrails: answers only from the profile (says "I don't know" otherwise), decli
 | Hook | `auto-format` (PostToolUse) | Prettier + ESLint `--fix` on edited files |
 | Hook | `lint-on-stop` (Stop) | Runs `npm run lint` before a session ends |
 
-## Deploy (GitHub Pages)
+## Deploy (Vercel)
 
-The site is planned to deploy to GitHub Pages as a static export. GitHub Pages can't run the `/api/chat` route, so the chat backend will be hosted separately (see SPEC.md). Run `/deploy-check` first.
+Import the GitHub repo in Vercel, add `ANTHROPIC_API_KEY` under Project → Settings → Environment Variables, and deploy. Run `/deploy-check` first.

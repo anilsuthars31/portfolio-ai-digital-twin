@@ -4,7 +4,7 @@
 
 A personal portfolio website with an embedded **AI Digital Twin** — a chatbot that represents me and answers recruiters', classmates', and visitors' questions about my skills, projects, and background, using the Claude API grounded in a profile file I write.
 
-**Stack:** Next.js (App Router) + TypeScript, Tailwind CSS, Anthropic Claude API or Google Gemini API (free tier), GitHub Pages (static hosting).
+**Stack:** Next.js (App Router) + TypeScript, Tailwind CSS, Anthropic Claude API, Vercel.
 
 ## 2. Core features
 
@@ -29,11 +29,9 @@ A personal portfolio website with an embedded **AI Digital Twin** — a chatbot 
 ```
 Browser (ChatWidget) --POST /api/chat {messages}--> Next.js API route
                                                      |- lib/prompt.ts reads data/profile.md
-                                                     |- lib/llm.ts -> Claude or Gemini (streaming)
+                                                     |- Anthropic SDK -> Claude (streaming)
                      <------------ streamed text ----|
 ```
-
-**Hosting:** the portfolio is deployed to **GitHub Pages** as a static export. GitHub Pages cannot run the `/api/chat` route (no server), so the chat endpoint needs a separate free host that keeps the API key secret (e.g. a Cloudflare Worker or similar serverless function), and the widget calls that URL. The API key must never be shipped in the static site.
 
 ## 4. Claude Code plugin components
 
@@ -70,15 +68,12 @@ Plugin components that support developing and maintaining this project, stored i
 | `data/profile.md` (my info) | Done (email, LinkedIn, resume, photo, experience still TODO) |
 | Portfolio sections (hero, projects, skills, timeline, contact) | Done |
 | Chat API route with Claude + streaming | Done |
-| Free Gemini fallback (no paid key needed) | Done |
-| Project details modal + category filters | Done |
 | Chat widget UI | Done |
 | Guardrails (grounding, off-topic, limits) | Done |
 | Skills: `update-profile`, `twin-persona` | Done |
 | Commands: `/add-project`, `/test-twin`, `/deploy-check` | Done |
 | Hooks: protect secrets, auto-format, build check | Done |
-| Deploy to GitHub Pages (static export + Actions workflow) | Pending |
-| Chat backend reachable from GitHub Pages (separate serverless host for `/api/chat`) | Pending — host to be decided |
+| Deploy to Vercel | Pending |
 
 ## 6. Out of scope (for now)
 
