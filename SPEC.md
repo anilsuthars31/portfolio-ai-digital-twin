@@ -65,7 +65,7 @@ Plugin components that support developing and maintaining this project, stored i
 | SPEC.md (this doc) | Done |
 | GitHub repo created | Done |
 | Next.js + Tailwind project setup | Done |
-| `data/profile.md` (my info) | Done (email, LinkedIn, resume, photo, experience still TODO) |
+| `data/profile.md` (my info) | Done (photo optional, still TODO; resume kept private, not in the repo) |
 | Portfolio sections (hero, projects, skills, timeline, contact) | Done |
 | Chat API route with Claude + streaming | Done |
 | Free Gemini fallback (no paid key needed) | Done |
