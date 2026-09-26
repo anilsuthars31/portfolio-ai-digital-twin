@@ -38,7 +38,7 @@ The parser depends on these rules — breaking them silently drops content from 
 - Tech: Next.js, TypeScript
 - Highlights: Key result · another result
 - GitHub: https://github.com/anilsuthars31/repo
-- Live: https://example.vercel.app
+- Live: https://username.github.io/project
 
 One to three sentences: what it does, what I built, what I learned.
 ```

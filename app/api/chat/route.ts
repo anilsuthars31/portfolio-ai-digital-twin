@@ -1,18 +1,10 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { MAX_HISTORY_MESSAGES, MAX_MESSAGE_CHARS } from "@/lib/chat-limits";
+import { errorStatus, getProvider, type ChatTurn } from "@/lib/llm";
 import { buildSystemPrompt } from "@/lib/prompt";
 
 export const runtime = "nodejs";
 
-const MODEL = "claude-sonnet-5";
-const MAX_TOKENS = 1024;
-
-// Created lazily so builds work without credentials. Reads ANTHROPIC_API_KEY
-// from the server environment; the key is never sent to the client.
-let client: Anthropic | undefined;
-const getClient = () => (client ??= new Anthropic());
-
-type ValidationResult = { ok: true; messages: Anthropic.MessageParam[] } | { ok: false; error: string };
+type ValidationResult = { ok: true; messages: ChatTurn[] } | { ok: false; error: string };
 
 function validate(body: unknown): ValidationResult {
   const raw = (body as { messages?: unknown } | null)?.messages;
@@ -20,7 +12,7 @@ function validate(body: unknown): ValidationResult {
     return { ok: false, error: "Send a non-empty `messages` array." };
   }
 
-  const messages: Anthropic.MessageParam[] = [];
+  const messages: ChatTurn[] = [];
   for (const m of raw) {
     const { role, content } = (m ?? {}) as { role?: unknown; content?: unknown };
     if ((role !== "user" && role !== "assistant") || typeof content !== "string") {
@@ -60,55 +52,47 @@ export async function POST(req: Request) {
   const result = validate(body);
   if (!result.ok) return Response.json({ error: result.error }, { status: 400 });
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error("chat unavailable: ANTHROPIC_API_KEY is not set");
+  // API keys are read server-side only (lib/llm.ts); they never reach the client.
+  const provider = getProvider();
+  if (!provider) {
+    console.error("chat unavailable: set GEMINI_API_KEY (free) or ANTHROPIC_API_KEY");
     return Response.json(
       { error: "The AI twin isn't available right now — please use the contact links instead." },
       { status: 503 },
     );
   }
 
-  const stream = getClient().messages.stream({
-    model: MODEL,
-    max_tokens: MAX_TOKENS,
-    // Short, grounded chat answers don't need extended reasoning; keeps latency and cost low.
-    thinking: { type: "disabled" },
-    system: [{ type: "text", text: buildSystemPrompt(), cache_control: { type: "ephemeral" } }],
-    messages: result.messages,
-  });
-
+  const abort = new AbortController();
   const encoder = new TextEncoder();
   const readable = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
-        for await (const event of stream) {
-          if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-            controller.enqueue(encoder.encode(event.delta.text));
-          }
-        }
-        const final = await stream.finalMessage();
-        if (final.stop_reason === "max_tokens") {
-          controller.enqueue(encoder.encode("…"));
-        } else if (final.stop_reason === "refusal") {
-          controller.enqueue(
-            encoder.encode("Sorry, I can't help with that. Ask me about my projects or skills!"),
-          );
-        }
+        const chunks = provider.stream({
+          system: buildSystemPrompt(),
+          messages: result.messages,
+          signal: abort.signal,
+        });
+        for await (const text of chunks) controller.enqueue(encoder.encode(text));
       } catch (err) {
-        // Log the error type only — never the request headers or API key.
-        const status = err instanceof Anthropic.APIError ? err.status : undefined;
-        console.error("chat stream failed", status ?? (err as Error)?.name);
+        if (abort.signal.aborted) return;
+        // Log the provider and status only — never request headers or API keys.
+        const status = errorStatus(err);
+        console.error(`chat stream failed (${provider.name})`, status ?? (err as Error)?.name);
         const message =
-          err instanceof Anthropic.RateLimitError
+          status === 429
             ? "I'm getting a lot of questions right now — please try again in a minute."
             : "Sorry, something went wrong on my side. Please try again.";
-        controller.enqueue(encoder.encode(`\n\n${message}`));
+        controller.enqueue(
+          encoder.encode(`
+
+${message}`),
+        );
       } finally {
-        controller.close();
+        if (!abort.signal.aborted) controller.close();
       }
     },
     cancel() {
-      stream.abort();
+      abort.abort();
     },
   });
 

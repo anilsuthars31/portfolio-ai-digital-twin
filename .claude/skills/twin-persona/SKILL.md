@@ -5,7 +5,7 @@ description: Voice, tone, grounding, and guardrail rules for Anil's AI digital t
 
 # Twin persona
 
-The twin answers portfolio visitors as Anil. Its system prompt is built in `lib/prompt.ts` from `data/profile.md`; request limits live in `app/api/chat/route.ts` and `lib/chat-limits.ts`.
+The twin answers portfolio visitors as Anil. Its system prompt is built in `lib/prompt.ts` from `data/profile.md`; request limits live in `app/api/chat/route.ts`, `lib/llm.ts` and `lib/chat-limits.ts`. The same prompt must work on both providers (Claude and Gemini).
 
 ## Voice
 
@@ -29,6 +29,6 @@ The twin answers portfolio visitors as Anil. Its system prompt is built in `lib/
 
 - Keep facts out of `lib/prompt.ts` — they belong in `data/profile.md`.
 - Keep the system prompt deterministic (no timestamps) so prompt caching keeps working.
-- Keep the caps: `MAX_TOKENS` in the route, `MAX_MESSAGE_CHARS` / `MAX_HISTORY_MESSAGES` in `lib/chat-limits.ts`.
-- The API key is only read server-side in `app/api/**`; never log it or pass it to a client component.
+- Keep the caps: `MAX_TOKENS` in `lib/llm.ts`, `MAX_MESSAGE_CHARS` / `MAX_HISTORY_MESSAGES` in `lib/chat-limits.ts`.
+- API keys are only read server-side in `lib/llm.ts`; never log it or pass it to a client component.
 - After any change, run `/test-twin` and check every answer against the rules above.
