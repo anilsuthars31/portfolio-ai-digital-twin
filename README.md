@@ -1,5 +1,7 @@
 # Portfolio + AI Digital Twin
 
+**Live:** https://portfolio-ai-digital-twin.vercel.app
+
 Personal portfolio for Anil Suthar S with an **AI digital twin**: a chat widget that answers visitors' questions about my skills, projects, and education in my voice, grounded only in [`data/profile.md`](data/profile.md).
 
 Built with Next.js (App Router) + TypeScript, Tailwind CSS, and an LLM: Google Gemini's **free tier** by default, or the Claude API (`claude-sonnet-5`) if you add an Anthropic key. See [`SPEC.md`](SPEC.md) for features and status.
@@ -39,4 +41,4 @@ Guardrails: answers only from the profile (says "I don't know" otherwise), decli
 
 ## Deploy (Vercel)
 
-Import the GitHub repo in Vercel, add `GEMINI_API_KEY` (or `ANTHROPIC_API_KEY`) under Project → Settings → Environment Variables, and deploy. Run `/deploy-check` first.
+Live at https://portfolio-ai-digital-twin.vercel.app; every push to `main` redeploys automatically. To set up a new deployment: import the GitHub repo in Vercel, add `GEMINI_API_KEY` (or `ANTHROPIC_API_KEY`) under Project → Settings → Environment Variables, and deploy. Run `/deploy-check` first.

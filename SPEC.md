@@ -75,7 +75,7 @@ Plugin components that support developing and maintaining this project, stored i
 | Skills: `update-profile`, `twin-persona` | Done |
 | Commands: `/add-project`, `/test-twin`, `/deploy-check` | Done |
 | Hooks: protect secrets, auto-format, build check | Done |
-| Deploy to Vercel | Pending |
+| Deploy to Vercel | Done — https://portfolio-ai-digital-twin.vercel.app |
 
 ## 6. Out of scope (for now)
 

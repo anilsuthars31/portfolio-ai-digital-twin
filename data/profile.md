@@ -62,6 +62,7 @@ I'm a third-year B.Tech student in Digital Transformation at Atria University, i
 - Tech: Next.js, TypeScript, Tailwind CSS, Gemini API, Claude API
 - Highlights: Streaming chatbot · grounded answers · Claude Code hooks
 - GitHub: https://github.com/anilsuthars31/portfolio-ai-digital-twin
+- Live: https://portfolio-ai-digital-twin.vercel.app
 
 This website. It includes an AI chatbot that answers questions about me in my own voice, grounded only in a profile file so it never invents facts. It runs on the free Gemini API and can switch to the Claude API. I built it with Claude Code using custom skills, slash commands, and hooks.
 
