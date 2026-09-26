@@ -1,16 +1,20 @@
 import type { Entry } from "@/lib/profile";
 import GitHubIcon from "./GitHubIcon";
 
-export default function ProjectCard({ project }: { project: Entry }) {
+/** Splits a profile field like "a, b, c" or "x · y" into trimmed items. */
+export function splitList(value: string | undefined, separator: string): string[] {
+  return (value ?? "")
+    .split(separator)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+type Props = { project: Entry; onOpen: () => void };
+
+export default function ProjectCard({ project, onOpen }: Props) {
   const { title, description, fields } = project;
-  const tech = (fields.Tech ?? "")
-    .split(",")
-    .map((t) => t.trim())
-    .filter(Boolean);
-  const highlights = (fields.Highlights ?? "")
-    .split("·")
-    .map((h) => h.trim())
-    .filter(Boolean);
+  const tech = splitList(fields.Tech, ",");
+  const highlights = splitList(fields.Highlights, "·");
 
   return (
     <article className="group flex flex-col rounded-xl border border-zinc-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/40 dark:hover:border-indigo-800 dark:hover:shadow-zinc-900">
@@ -33,7 +37,15 @@ export default function ProjectCard({ project }: { project: Entry }) {
         )}
       </div>
 
-      <h3 className="mt-2 text-lg leading-snug font-semibold">{title}</h3>
+      <h3 className="mt-2 text-lg leading-snug font-semibold">
+        <button
+          type="button"
+          onClick={onOpen}
+          className="text-left hover:text-indigo-600 dark:hover:text-indigo-400"
+        >
+          {title}
+        </button>
+      </h3>
 
       {highlights.length > 0 && (
         <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium text-emerald-700 dark:text-emerald-400">
@@ -46,7 +58,17 @@ export default function ProjectCard({ project }: { project: Entry }) {
         </ul>
       )}
 
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">{description}</p>
+      <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+        {description}
+      </p>
+      <button
+        type="button"
+        onClick={onOpen}
+        className="mt-2 self-start text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
+      >
+        View details →
+      </button>
+      <div className="flex-1" />
 
       {tech.length > 0 && (
         <ul className="mt-4 flex flex-wrap gap-1.5">

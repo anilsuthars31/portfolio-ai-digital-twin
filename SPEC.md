@@ -4,7 +4,7 @@
 
 A personal portfolio website with an embedded **AI Digital Twin** — a chatbot that represents me and answers recruiters', classmates', and visitors' questions about my skills, projects, and background, using the Claude API grounded in a profile file I write.
 
-**Stack:** Next.js (App Router) + TypeScript, Tailwind CSS, Anthropic Claude API, Vercel.
+**Stack:** Next.js (App Router) + TypeScript, Tailwind CSS, Anthropic Claude API or Google Gemini API (free tier), Vercel.
 
 ## 2. Core features
 
@@ -29,7 +29,7 @@ A personal portfolio website with an embedded **AI Digital Twin** — a chatbot 
 ```
 Browser (ChatWidget) --POST /api/chat {messages}--> Next.js API route
                                                      |- lib/prompt.ts reads data/profile.md
-                                                     |- Anthropic SDK -> Claude (streaming)
+                                                     |- lib/llm.ts -> Claude or Gemini (streaming)
                      <------------ streamed text ----|
 ```
 
@@ -68,6 +68,8 @@ Plugin components that support developing and maintaining this project, stored i
 | `data/profile.md` (my info) | Done (email, LinkedIn, resume, photo, experience still TODO) |
 | Portfolio sections (hero, projects, skills, timeline, contact) | Done |
 | Chat API route with Claude + streaming | Done |
+| Free Gemini fallback (no paid key needed) | Done |
+| Project details modal + category filters | Done |
 | Chat widget UI | Done |
 | Guardrails (grounding, off-topic, limits) | Done |
 | Skills: `update-profile`, `twin-persona` | Done |

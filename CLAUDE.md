@@ -12,7 +12,7 @@ See `SPEC.md` for features, plugin components, and done/pending status. Update t
 
 - **Next.js (App Router) + TypeScript** — frontend and API routes
 - **Tailwind CSS** — styling
-- **Anthropic SDK (`@anthropic-ai/sdk`)** — powers the twin; default model `claude-sonnet-5`
+- **LLM providers (`lib/llm.ts`)** — Claude via `@anthropic-ai/sdk` (`claude-sonnet-5`) when `ANTHROPIC_API_KEY` is set; otherwise Google Gemini's free tier via `@google/genai` (`GEMINI_API_KEY`, default model `gemini-3.8-flash`)
 - **Vercel** — deployment
 
 ## Commands
@@ -41,6 +41,7 @@ data/
 lib/
   profile.ts            # parses data/profile.md for the site
   prompt.ts             # builds the twin's system prompt from data/profile.md
+  llm.ts                # streams replies from Claude (paid) or Gemini (free tier)
   chat-limits.ts        # message length / history caps shared by route and widget
 scripts/test-twin.mjs   # sends twin-questions.json to /api/chat
 .claude/
@@ -63,7 +64,7 @@ scripts/test-twin.mjs   # sends twin-questions.json to /api/chat
 
 ## Security
 
-- `ANTHROPIC_API_KEY` lives in `.env.local` only; never commit it, never log it, never expose it to client components (only use it in `app/api/**`).
+- `GEMINI_API_KEY` / `ANTHROPIC_API_KEY` live in `.env.local` only; never commit them, never log them, never expose them to client components (read them only in server code: `lib/llm.ts`, used by `app/api/**`).
 - Validate and length-limit user messages in the API route.
 
 ## Workflow
