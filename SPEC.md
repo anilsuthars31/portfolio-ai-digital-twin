@@ -63,7 +63,7 @@ Plugin components that support developing and maintaining this project, stored i
 |---|---|
 | CLAUDE.md | Done |
 | SPEC.md (this doc) | Done |
-| GitHub repo created | Pending |
+| GitHub repo created | Done |
 | Next.js + Tailwind project setup | Pending |
 | `data/profile.md` (my info) | Pending |
 | Portfolio sections (hero, projects, skills, timeline, contact) | Pending |
