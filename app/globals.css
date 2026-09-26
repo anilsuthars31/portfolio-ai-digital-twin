@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+/* Class-based dark mode, toggled by components/ThemeToggle.tsx */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
