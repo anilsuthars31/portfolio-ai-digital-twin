@@ -79,7 +79,7 @@ export async function POST(req: Request) {
         const status = errorStatus(err);
         console.error(`chat stream failed (${provider.name})`, status ?? (err as Error)?.name);
         const message =
-          status === 429
+          status === 429 || status === 503
             ? "I'm getting a lot of questions right now — please try again in a minute."
             : "Sorry, something went wrong on my side. Please try again.";
         controller.enqueue(

@@ -42,26 +42,50 @@ async function* streamClaude({ system, messages, signal }: StreamArgs) {
 
 // Gemini (free tier via Google AI Studio) — used when only GEMINI_API_KEY is set.
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+const GEMINI_FALLBACK_MODELS = ["gemini-3.5-flash", "gemini-3.5-flash-lite"];
+// The free tier is often briefly overloaded (503) or rate limited (429); these are worth retrying.
+const RETRYABLE = new Set([429, 500, 503]);
 let gemini: GoogleGenAI | undefined;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function* streamGemini({ system, messages, signal }: StreamArgs) {
   gemini ??= new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  const stream = await gemini.models.generateContentStream({
-    model: GEMINI_MODEL,
-    contents: messages.map((m) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }],
-    })),
-    config: {
-      systemInstruction: system,
-      // Thinking tokens count toward the output budget, so leave headroom for the answer.
-      maxOutputTokens: MAX_TOKENS * 2,
-      thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
-      abortSignal: signal,
-    },
-  });
-  for await (const chunk of stream) {
-    if (chunk.text) yield chunk.text;
+  // Try the main model twice, then the fallback models. Retries only happen before any
+  // text has been sent, so the visitor never sees a half answer repeated.
+  const attempts = [GEMINI_MODEL, GEMINI_MODEL, ...GEMINI_FALLBACK_MODELS];
+
+  for (let i = 0; i < attempts.length; i++) {
+    let sentText = false;
+    try {
+      const stream = await gemini.models.generateContentStream({
+        model: attempts[i],
+        contents: messages.map((m) => ({
+          role: m.role === "assistant" ? "model" : "user",
+          parts: [{ text: m.content }],
+        })),
+        config: {
+          systemInstruction: system,
+          // Thinking tokens count toward the output budget, so leave headroom for the answer.
+          maxOutputTokens: MAX_TOKENS * 2,
+          thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
+          abortSignal: signal,
+        },
+      });
+      for await (const chunk of stream) {
+        if (chunk.text) {
+          sentText = true;
+          yield chunk.text;
+        }
+      }
+      return;
+    } catch (err) {
+      const status = errorStatus(err);
+      const canRetry = !sentText && !signal.aborted && status !== undefined && RETRYABLE.has(status);
+      if (!canRetry || i === attempts.length - 1) throw err;
+      console.warn(`gemini ${attempts[i]} returned ${status}; retrying`);
+      await sleep(800 * (i + 1));
+    }
   }
 }
 
