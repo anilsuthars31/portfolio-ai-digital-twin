@@ -64,15 +64,15 @@ Plugin components that support developing and maintaining this project, stored i
 | CLAUDE.md | Done |
 | SPEC.md (this doc) | Done |
 | GitHub repo created | Done |
-| Next.js + Tailwind project setup | Pending |
-| `data/profile.md` (my info) | Pending |
-| Portfolio sections (hero, projects, skills, timeline, contact) | Pending |
-| Chat API route with Claude + streaming | Pending |
-| Chat widget UI | Pending |
-| Guardrails (grounding, off-topic, limits) | Pending |
-| Skills: `update-profile`, `twin-persona` | Pending |
-| Commands: `/add-project`, `/test-twin`, `/deploy-check` | Pending |
-| Hooks: protect secrets, auto-format, build check | Pending |
+| Next.js + Tailwind project setup | Done |
+| `data/profile.md` (my info) | Done (email, LinkedIn, resume, photo, experience still TODO) |
+| Portfolio sections (hero, projects, skills, timeline, contact) | Done |
+| Chat API route with Claude + streaming | Done |
+| Chat widget UI | Done |
+| Guardrails (grounding, off-topic, limits) | Done |
+| Skills: `update-profile`, `twin-persona` | Done |
+| Commands: `/add-project`, `/test-twin`, `/deploy-check` | Done |
+| Hooks: protect secrets, auto-format, build check | Done |
 | Deploy to Vercel | Pending |
 
 ## 6. Out of scope (for now)

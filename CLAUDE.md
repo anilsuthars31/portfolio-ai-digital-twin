@@ -22,21 +22,29 @@ npm install        # install dependencies
 npm run dev        # dev server at http://localhost:3000
 npm run build      # production build (must pass before commit)
 npm run lint       # ESLint
+npm run format     # Prettier
+npm run test:twin  # ask the running twin sample questions (see /test-twin)
 ```
 
-## Project structure (planned)
+Next.js 16 differs from older versions — see `AGENTS.md` and `node_modules/next/dist/docs/` before using unfamiliar Next APIs.
+
+## Project structure
 
 ```
 app/
-  page.tsx              # portfolio home (hero, about, projects, skills, contact)
-  api/chat/route.ts     # chatbot endpoint -> Claude API (streaming)
-components/             # UI components (Navbar, ProjectCard, ChatWidget, ...)
+  layout.tsx            # navbar, theme script, ChatWidget on every page
+  page.tsx              # portfolio home (hero, projects, skills, timeline, contact)
+  api/chat/route.ts     # chatbot endpoint -> Claude API (streaming, validation, caps)
+components/             # UI components, one per file (Navbar, ProjectCard, ChatWidget, ...)
 data/
-  profile.md            # single source of truth about Anil (bio, projects, skills)
+  profile.md            # single source of truth about Anil (format: update-profile skill)
 lib/
+  profile.ts            # parses data/profile.md for the site
   prompt.ts             # builds the twin's system prompt from data/profile.md
+  chat-limits.ts        # message length / history caps shared by route and widget
+scripts/test-twin.mjs   # sends twin-questions.json to /api/chat
 .claude/
-  skills/  commands/  settings.json (hooks)
+  skills/  commands/  hooks/  settings.json
 ```
 
 ## Conventions
